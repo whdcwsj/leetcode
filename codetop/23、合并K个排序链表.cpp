@@ -36,3 +36,5 @@ ListNode* mergeKLists(vector<ListNode*>& lists){
     }
     return head->next;
 }
+
+//归并方法
