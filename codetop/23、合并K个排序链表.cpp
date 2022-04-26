@@ -10,7 +10,7 @@ struct ListNode{
 };
 
 //这样时间复杂度超标，O(NK)
-//1、多个指针指向多个子链表
+//1、多个指针指向多个子链表(K个)
 ListNode* mergeKLists(vector<ListNode*>& lists){
     ListNode*head=new ListNode(-1);
     ListNode*wang=head;
@@ -77,4 +77,36 @@ ListNode* mergeKLists(vector<ListNode*>& lists){
     return mergeSort(lists,0,lists.size()-1);
 }
 
-//3、优先队列，最小堆
+// 3、优先队列，最小堆
+// 这个方法和前两种方法的思路有所不同，需要维护当前每个链表没有被合并的元素的最前面一个,k个链表就最多有k个满足这样条件的元素
+// 每次在这些元素里面选取val属性最小的元素合并到答案中。
+// 在选取最小元素的时候，我们可以用优先队列来优化这个过程。
+
+
+//这样是小顶堆
+struct cmp{
+    bool operator()(ListNode*a,ListNode*b){
+        return a->val>b->val;
+    }
+}
+
+
+ListNode* mergeKLists(vector<ListNode*>& lists){
+    priority_queue<ListNode*,vector<ListNode*>,cmp>q;
+    auto head=new ListNode(-1);
+    auto wang=head;
+    for(auto l:lists){
+        if(l!=NULL) q.push(l);
+    }
+    while(!q.empty()){
+        //堆顶的链表最小
+        auto temp=q.top();
+        q.pop();
+        wang->next=temp;
+        wang=wang->next;
+        if(temp->next){
+            q.push(temp->next);
+        }
+    }
+    return head->next;
+}
