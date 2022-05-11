@@ -14,7 +14,7 @@ struct TreeNode{
     TreeNode(int x,TreeNode*left,TreeNode*right):val(x),left(left),right(right){}
 };
 
-//自顶而下：以BFS为主
+//自顶而下：以DFS为主
 //1、一般路径
 vector<int>res;
 void dfs(TreeNode*root,vector<int>&path){
