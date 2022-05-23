@@ -34,6 +34,7 @@ void dfs(TreeNode*node,string &s){
 }
 
 string smallestFromLeaf(TreeNode* root){
+    string s="";
     if(!root) return s;
     dfs(root,s);
     sort(res.begin(),res.end());
