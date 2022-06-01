@@ -48,49 +48,54 @@ int reversePairs(vector<int>& nums) {
 
 
 //2、树状数组
-//没太看懂
-// vector<int>tree;
-// int n;
+class BIT {
+private:
+    vector<int> tree;
+    int n;
 
-// static lowbit(int x){
-//     return x&(-x);
-// }
+public:
+    BIT(int _n): n(_n), tree(_n + 1) {}
 
-// //单点修改
-// void update(int x){
-//     while(x<=n){
-//         tree[x]++;
-//         x+=lowbit(x);
-//     }
-// }
+    static int lowbit(int x) {
+        return x & (-x);
+    }
 
+    //区间查询
+    int query(int x) {
+        int ret = 0;
+        while (x) {
+            ret += tree[x];
+            x -= lowbit(x);
+        }
+        return ret;
+    }
 
-// //区间查询
-// int query(int x){
-//     int res=0;
-//     while(x){
-//         res+=tree[x];
-//         x-=lowbit(x);
-//     }
-//     return res;
-// }
+    //单点修改
+    void update(int x) {
+        while (x <= n) {
+            ++tree[x];
+            x += lowbit(x);
+        }
+    }
+};
 
-// int reversePairs(vector<int>& nums) {
-//     n=nums.size();
-//     tree.resize(n+1);
-//     vector<int>temp=nums;
-//     //离散化
-//     sort(temp.begin(),temp.end());
-//     for(int &num:nums){
-//         num=lower_bound(temp.begin(),temp.end(),num)-temp.begin()+1;
-//     }
-//     int ans = 0;
-//     for (int i = n - 1; i >= 0; --i) {
-//         ans += query(nums[i] - 1);
-//         update(nums[i]);
-//     }
-//     return ans;
-// }
+int reversePairs(vector<int>& nums) {
+    int n=nums.size();
+    vector<int>temp=nums;
+    //离散化
+    //将[1,1000,1000000]，变化为[1,2,3]
+    sort(temp.begin(),temp.end());
+    for(int &num:nums){
+        num=lower_bound(temp.begin(),temp.end(),num)-temp.begin()+1;
+    }
+    BIT bit(n);
+    int ans = 0;
+    for (int i = n - 1; i >= 0; --i) {
+        ans += bit.query(nums[i] - 1);
+        bit.update(nums[i]);
+    }
+    return ans;
+}
 
 
 
