@@ -2,6 +2,7 @@
 using namespace std;
 
 
+//放弃，没做
 queue<int>q;
 //记录最大数值
 deque<int>d;
