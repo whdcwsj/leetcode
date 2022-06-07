@@ -4,10 +4,10 @@ using namespace std;
 
 //不允许乘除，不允许条件判断语句
 //1、递归
-// int sumNums(int n) {
-//     n && (n+=sumNums(n-1));
-//     return n;
-// }
+int sumNums(int n) {
+    n && (n+=sumNums(n-1));
+    return n;
+}
 
 
 //2、快速乘
