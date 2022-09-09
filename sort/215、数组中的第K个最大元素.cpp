@@ -32,7 +32,8 @@ int quickSort(vector<int>&a,int left,int right,int index){
 
 int main(){
     srand(time(0));
-    nums={3,76,54,1,87,90,5};
+    // nums={3,76,54,1,87,90,5};
+    nums={5,5,6,3,9,10,10};
     int k=3;
     int res=quickSort(nums,0,nums.size()-1,nums.size()-k);
 
